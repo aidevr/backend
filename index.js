@@ -3,7 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const promClient = require('prom-client');
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 
 app.use(cors());
@@ -83,7 +83,7 @@ app.delete('/todos/:id', (req, res) => {
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`TODO backend running at http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
   });
 }
 

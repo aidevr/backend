@@ -20,6 +20,22 @@ This is a simple Node.js backend for a TODO application. It provides RESTful API
 
 The server will run on `http://localhost:3000` by default.
 
+## Running the Application
+
+To run the application using Docker:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t node-app .
+   ```
+
+2. Run the container with the desired port (e.g., 4000):
+   ```bash
+   docker run -e PORT=4000 -p 4000:4000 node-app
+   ```
+
+The application will be accessible at `http://localhost:4000`.
+
 ## API Usage with `curl`
 
 ### 1. Get all todos
