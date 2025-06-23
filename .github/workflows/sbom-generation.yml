@@ -1,0 +1,51 @@
+name: Generate SBOM and Upload to Dependency-Track
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  generate-and-upload-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install CycloneDX CLI
+      run: npm install -g @cyclonedx/bom
+
+    - name: Generate SBOM
+      run: |
+        npx @cyclonedx/bom -o sbom.json
+
+    - name: Upload SBOM to Dependency-Track
+      env:
+        API_KEY: ${{ secrets.DEPENDENCY_TRACK_API_KEY }}
+        SERVER_URL: ${{ secrets.DEPENDENCY_TRACK_SERVER_URL }}
+        PROJECT_NAME: ${{ secrets.DEPENDENCY_TRACK_PROJECT_NAME }}
+        PROJECT_VERSION: ${{ github.ref_name }}
+      run: |
+        curl -X POST \
+          -H "X-Api-Key: $API_KEY" \
+          -H "Content-Type: multipart/form-data" \
+          -F "projectName=$PROJECT_NAME" \
+          -F "projectVersion=latest" \
+          -F "bom=@sbom.json" \
+          "$SERVER_URL/api/v1/bom"
+
+    - name: Upload SBOM artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: sbom
+        path: sbom.json
