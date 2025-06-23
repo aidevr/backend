@@ -36,8 +36,20 @@ jobs:
         PROJECT_NAME: ${{ secrets.DEPENDENCY_TRACK_PROJECT_NAME }}
         PROJECT_VERSION: ${{ github.ref_name }}
       run: |
-        curl -X "POST" \
-          "${SERVER_URL}/api/v1/bom" \
+        echo "DEBUG: SERVER_URL = ${SERVER_URL}"
+        echo "DEBUG: Full URL = ${SERVER_URL}/api/v1/bom"
+        echo "DEBUG: PROJECT_NAME = ${PROJECT_NAME}"
+        echo "DEBUG: PROJECT_VERSION = ${PROJECT_VERSION}"
+        
+        # Check if SBOM file exists
+        if [ ! -f "sbom.json" ]; then
+          echo "ERROR: sbom.json file not found"
+          exit 1
+        fi
+        
+        # Upload SBOM to Dependency-Track
+        curl -v -X POST \
+          "http://http://74.162.33.10:8081/api/v1/bom" \
           -H "X-Api-Key: ${API_KEY}" \
           -H "Content-Type: multipart/form-data" \
           -F "projectName=${PROJECT_NAME}" \
