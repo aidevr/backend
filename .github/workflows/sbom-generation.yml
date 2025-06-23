@@ -3,7 +3,7 @@ name: Generate SBOM and Upload to Dependency-Track
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
 
 jobs:
