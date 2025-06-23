@@ -23,11 +23,11 @@ jobs:
       run: npm install
 
     - name: Install CycloneDX CLI
-      run: npm install -g @cyclonedx/bom
+      run: npm install -g @cyclonedx/cyclonedx-bom
 
     - name: Generate SBOM
       run: |
-        npx @cyclonedx/bom -o sbom.json
+        cyclonedx-bom -o sbom.json
 
     - name: Upload SBOM to Dependency-Track
       env:
