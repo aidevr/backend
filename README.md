@@ -105,13 +105,13 @@ If the issue persists, create a minimal `package.json` with only essential field
 ### Step 6: Update CycloneDX
 Ensure you are using the latest version of CycloneDX:
 ```bash
-npm install -g @cyclonedx/bom@latest
+npm install -g @cyclonedx/cyclonedx-npm@latest
 ```
 
 ### Step 7: Generate SBOM
 Once resolved, generate the SBOM for this application using:
 ```bash
-npx @cyclonedx/bom -o sbom.json
+npx cyclonedx-npm -o sbom.json
 ```
 
 The generated `sbom.json` file will contain the Software Bill of Materials for the current application.
