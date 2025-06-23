@@ -52,8 +52,7 @@ jobs:
           "http://74.162.33.10:8081/api/v1/bom" \
           -H "X-Api-Key: ${API_KEY}" \
           -H "Content-Type: multipart/form-data" \
-          -F "projectName=ba731027-f87d-46b6-aaa3-d99f1a9bb47f" \
-          -F "projectVersion=latest" \
+          -F "project=ba731027-f87d-46b6-aaa3-d99f1a9bb47f" \
           -F "bom=@sbom.json"
 
     - name: Upload SBOM artifact
