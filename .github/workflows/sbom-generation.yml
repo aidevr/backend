@@ -37,12 +37,12 @@ jobs:
         PROJECT_VERSION: ${{ github.ref_name }}
       run: |
         curl -X POST \
-          -H "X-Api-Key: $API_KEY" \
+          -H "X-Api-Key: ${API_KEY}" \
           -H "Content-Type: multipart/form-data" \
-          -F "projectName=$PROJECT_NAME" \
+          -F "projectName=${PROJECT_NAME}" \
           -F "projectVersion=latest" \
           -F "bom=@sbom.json" \
-          "$SERVER_URL/api/v1/bom"
+          "${SERVER_URL}/api/v1/bom"
 
     - name: Upload SBOM artifact
       uses: actions/upload-artifact@v4
